@@ -5,6 +5,6 @@
 
 	},
 	"scripts": {
-		"start": "node test.js"
+		"start": "node ./my-leetcode/242-4-plus.js"
 	}
 }
