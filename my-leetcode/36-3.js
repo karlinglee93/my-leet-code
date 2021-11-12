@@ -7,19 +7,27 @@
  * @return {boolean}
  */
 var isValidSudoku = function(board) {
-	const rowArr = new Array(9).fill(new Array(9).fill(0));
-	const columnArr = new Array(9).fill(new Array(9).fill(0));
-	const squareArr = new Array(9).fill(new Array(9).fill(new Array(9).fill(0)));
+	// two implementations, but the first one shows wrong?
+	// When fill gets passed an object, it will copy the reference and fill the array with references to that object.
+	// const rows = new Array(9).fill(new Array(9).fill(0));
+	// const columns = new Array(9).fill(new Array(9).fill(0));
+	// const subboxes = new Array(3).fill(new Array(3).fill(new Array(9).fill(0)));
+
+	const rows = new Array(9).fill(0).map(() => new Array(9).fill(0));
+    const columns = new Array(9).fill(0).map(() => new Array(9).fill(0));
+    const subboxes = new Array(3).fill(0).map(() => new Array(3).fill(0).map(() => new Array(9).fill(0)));
 
 	for (let i = 0; i < 9; i++) {
 		for (let j = 0; j < 9; j++) {
 			if (board[i][j] !== '.') {
 				const value = parseInt(board[i][j]);
-				rowArr[i][value - 1]++;
-				columnArr[j][value - 1]++;
-				squareArr[parseInt(i / 3)][parseInt(j / 3)][value - 1]++;
+				rows[i][value - 1]++;
+				columns[j][value - 1]++;
+				subboxes[parseInt(i / 3)][parseInt(j / 3)][value - 1]++;
 
-				if (rowArr[i][value - 1] > 1 || columnArr[j][value - 1] > 1 || squareArr[parseInt(i / 3)][parseInt(j / 3)][value - 1] > 1) return false;
+				if (rows[i][value - 1] > 1 || columns[j][value - 1] > 1 || subboxes[parseInt(i / 3)][parseInt(j / 3)][value - 1] > 1) {
+					return false
+				};
 			}
 		}
 	}
